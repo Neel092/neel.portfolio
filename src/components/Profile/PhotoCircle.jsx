@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { C } from "../../constants/designTokens";
 import StatusDot from "../StatusDot";
+import ProfilePhoto from "./Profile_Photo.jpeg"
 
 export default function PhotoCircle() {
   return (
@@ -90,7 +91,7 @@ export default function PhotoCircle() {
                 letterSpacing: "0.1em",
               }}
             >
-              <img src="./src/components/Profile/Profile_Photo.jpeg" style={{ width: "100%", height: "100%", objectFit: "cover" }}></img>
+              <img src={ProfilePhoto} style={{ width: "100%", height: "100%", objectFit: "cover" }}></img>
             </span>
           </div>
         </div>
