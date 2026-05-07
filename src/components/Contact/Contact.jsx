@@ -1,8 +1,10 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { C, fadeUp, stagger } from "../../constants/designTokens";
+import useIsMobile from "../../hooks/useIsMobile";
 
 export default function Contact() {
+  const isMobile = useIsMobile();
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-10%" });
 
@@ -13,9 +15,13 @@ export default function Contact() {
       initial="hidden"
       animate={inView ? "visible" : "hidden"}
       variants={stagger}
-      style={{ padding: "120px 0 60px", maxWidth: 1200, margin: "0 auto" }}
+      style={{
+        padding: isMobile ? "80px 0 40px" : "120px 0 60px",
+        maxWidth: 1200,
+        margin: "0 auto"
+      }}
     >
-      <div style={{ textAlign: "center", marginBottom: 80 }}>
+      <div style={{ textAlign: "center", marginBottom: isMobile ? 40 : 80 }}>
         <motion.h2
           variants={fadeUp}
           style={{
@@ -33,17 +39,23 @@ export default function Contact() {
             WebkitTextFillColor: "transparent",
           }}>Connect</span>
         </motion.h2>
-        <motion.p variants={fadeUp} style={{ color: C.muted, maxWidth: 600, margin: "0 auto", fontSize: 17, lineHeight: 1.6, opacity: 0.8 }}>
-          Whether you have a project in mind, a question, or just want to say hello — I'm always happy to connect.
+        <motion.p variants={fadeUp} style={{ color: C.muted, maxWidth: 600, margin: "0 auto", fontSize: isMobile ? 15 : 17, lineHeight: 1.6, opacity: 0.8 }}>
+          “Let’s build something impactful together -- blending creativity, technology, and innovation.”
         </motion.p>
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1.2fr 1fr", gap: 48, alignItems: "flex-start" }}>
+      <div style={{
+        display: isMobile ? "flex" : "grid",
+        flexDirection: isMobile ? "column" : "row",
+        gridTemplateColumns: isMobile ? "1fr" : "1fr 1.2fr 1fr",
+        gap: isMobile ? 40 : 48,
+        alignItems: "flex-start"
+      }}>
 
         {/* Left Column: Bio & Navigation */}
-        <motion.div variants={fadeUp} style={{ display: "flex", flexDirection: "column", gap: 32 }}>
+        <motion.div variants={fadeUp} style={{ display: "flex", flexDirection: "column", gap: 32, width: "100%" }}>
           <div>
-            <h3 style={{ fontSize: 28, fontWeight: 900, color: C.text, marginBottom: 12, letterSpacing: "-0.02em" }}>Neel Patil</h3>
+            <h3 style={{ fontSize: isMobile ? 24 : 28, fontWeight: 900, color: C.text, marginBottom: 12, letterSpacing: "-0.02em" }}>Neel Patil</h3>
             <p style={{ color: C.mutedLight, fontSize: 14, lineHeight: 1.6, marginBottom: 20 }}>
               Backend & DevOps engineer focused on building high-performance, scalable distributed systems.
             </p>
@@ -87,19 +99,6 @@ export default function Contact() {
             </div>
 
             <div>
-              <div
-                style={{
-                  fontSize: 10,
-                  color: C.muted,
-                  textTransform: "uppercase",
-                  letterSpacing: "0.2em",
-                  marginBottom: 16,
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 8,
-                }}
-              >
-              </div>
               <div style={{ display: "flex", gap: 10 }}>
                 {[
                   {
@@ -156,7 +155,7 @@ export default function Contact() {
         </motion.div>
 
         {/* Center: Message Form Card */}
-        <motion.div variants={fadeUp} style={{ background: C.surface, borderRadius: 24, padding: "36px 40px", border: `1px solid ${C.border}`, boxShadow: "0 20px 80px rgba(0,0,0,0.3)" }}>
+        <motion.div variants={fadeUp} style={{ width: "100%", background: C.surface, borderRadius: 24, padding: isMobile ? "32px 24px" : "36px 40px", border: `1px solid ${C.border}`, boxShadow: "0 20px 80px rgba(0,0,0,0.3)" }}>
           <h3 style={{ fontSize: 24, fontWeight: 800, marginBottom: 8, color: C.text }}>Send a Message</h3>
           <p style={{ color: C.muted, fontSize: 13, marginBottom: 32, opacity: 0.7 }}>I'll get back to you within 24 hours</p>
 
@@ -174,7 +173,7 @@ export default function Contact() {
               <input
                 type="text"
                 name="name"
-                placeholder="John Doe"
+                placeholder="Name"
                 required
                 style={{ width: "100%", background: C.bg, border: `1px solid ${C.border}`, borderRadius: 12, padding: "14px 18px", color: C.text, outline: "none", fontSize: 13 }}
               />
@@ -184,7 +183,7 @@ export default function Contact() {
               <input
                 type="email"
                 name="email"
-                placeholder="john@example.com"
+                placeholder="[EMAIL_ADDRESS]"
                 required
                 style={{ width: "100%", background: C.bg, border: `1px solid ${C.border}`, borderRadius: 12, padding: "14px 18px", color: C.text, outline: "none", fontSize: 13 }}
               />
@@ -222,7 +221,7 @@ export default function Contact() {
         </motion.div>
 
         {/* Right Column: Cards */}
-        <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: 24, width: "100%" }}>
           <motion.div variants={fadeUp} style={{ background: C.surface, borderRadius: 20, padding: 32, border: `1px solid ${C.border}` }}>
             <div style={{ fontSize: 10, color: C.muted, textTransform: "uppercase", letterSpacing: "0.2em", marginBottom: 20, display: "flex", alignItems: "center", gap: 8 }}>
               <span style={{ width: 12, height: 1, background: C.accent }}></span> CONTACT INFO
@@ -259,7 +258,21 @@ export default function Contact() {
       </div>
 
       {/* Footer */}
-      <motion.footer variants={fadeUp} style={{ marginTop: 120, paddingTop: 40, borderTop: `1px solid ${C.border}`, display: "flex", justifyContent: "space-between", alignItems: "center", opacity: 0.6 }}>
+      <motion.footer
+        variants={fadeUp}
+        style={{
+          marginTop: isMobile ? 80 : 120,
+          paddingTop: 40,
+          borderTop: `1px solid ${C.border}`,
+          display: "flex",
+          flexDirection: isMobile ? "column" : "row",
+          justifyContent: "space-between",
+          alignItems: isMobile ? "center" : "center",
+          gap: isMobile ? 20 : 0,
+          textAlign: isMobile ? "center" : "left",
+          opacity: 0.6
+        }}
+      >
         <div style={{ fontSize: 12, color: C.muted, fontFamily: "monospace" }}>
           © 2026 Neel Patil.   // still building.
         </div>
@@ -272,3 +285,4 @@ export default function Contact() {
     </motion.section>
   );
 }
+

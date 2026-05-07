@@ -47,7 +47,7 @@ export const projects = [
     highlights: ["Framer Motion", "Glassmorphism", "Vite", "Modern UI/UX"],
     tech: ["React", "Framer Motion", "Vite", "Vanilla CSS"],
     detail: "An editorial-grade web experience focused on smooth motion, high-contrast dark mode, and interactive storytelling.",
-    github: "https://github.com/Neel092/Portfolio",
-    live: null,
+    github: "https://github.com/Neel092/neel.portfolio",
+    live: "https://neelpatil.vercel.app/",
   },
 ];

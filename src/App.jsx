@@ -2,7 +2,6 @@ import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { C, stagger, fadeUp } from "./constants/designTokens";
 
-
 import NoiseOverlay from "./components/Overlays/NoiseOverlay";
 import GridLines from "./components/Overlays/GridLines";
 import FollowCursor from "./components/FollowCursor";
@@ -10,14 +9,14 @@ import StatusDot from "./components/StatusDot";
 
 import Terminal from "./components/Terminal/Terminal";
 import PhotoCircle from "./components/Profile/PhotoCircle";
-
 import ProjectsSection from "./components/Projects/ProjectsSection";
-
 import Contact from "./components/Contact/Contact";
 
+import useIsMobile from "./hooks/useIsMobile";
 import "./index.css";
 
 export default function App() {
+  const isMobile = useIsMobile();
   const heroRef = useRef(null);
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
   const heroOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
@@ -29,53 +28,61 @@ export default function App() {
         background: C.bg,
         minHeight: "100vh",
         color: C.text,
-        cursor: "none",
+        cursor: isMobile ? "default" : "none",
         position: "relative",
         overflowX: "hidden",
       }}
     >
       <NoiseOverlay />
       <GridLines />
-      <FollowCursor />
+      {!isMobile && <FollowCursor />}
 
       {/* Ambient orbs */}
       <div style={{ position: "fixed", inset: 0, pointerEvents: "none", zIndex: 0, overflow: "hidden" }}>
         <div
           style={{
             position: "absolute",
-            top: "8%",
-            left: "15%",
-            width: 500,
-            height: 500,
+            top: isMobile ? "10%" : "8%",
+            left: isMobile ? "5%" : "15%",
+            width: isMobile ? 350 : 500,
+            height: isMobile ? 350 : 500,
             borderRadius: "50%",
-            background: `radial-gradient(circle, ${C.accent}0d, transparent 65%)`,
+            background: `radial-gradient(circle, ${C.accent}${isMobile ? "1a" : "0d"}, transparent 70%)`,
           }}
         />
         <div
           style={{
             position: "absolute",
-            top: "30%",
-            right: "10%",
-            width: 400,
-            height: 400,
+            top: isMobile ? "40%" : "30%",
+            right: isMobile ? "-5%" : "10%",
+            width: isMobile ? 300 : 400,
+            height: isMobile ? 300 : 400,
             borderRadius: "50%",
-            background: `radial-gradient(circle, ${C.purple}0a, transparent 60%)`,
+            background: `radial-gradient(circle, ${C.purple}${isMobile ? "18" : "0a"}, transparent 65%)`,
           }}
         />
-        <div
-          style={{
-            position: "absolute",
-            bottom: "15%",
-            left: "30%",
-            width: 350,
-            height: 350,
-            borderRadius: "50%",
-            background: `radial-gradient(circle, ${C.accent2}08, transparent 60%)`,
-          }}
-        />
+        {isMobile && (
+          <div
+            style={{
+              position: "absolute",
+              bottom: "20%",
+              left: "10%",
+              width: 250,
+              height: 250,
+              borderRadius: "50%",
+              background: `radial-gradient(circle, ${C.accent2}12, transparent 60%)`,
+            }}
+          />
+        )}
       </div>
 
-      <div style={{ position: "relative", zIndex: 2, maxWidth: 1200, margin: "0 auto", padding: "0 clamp(20px, 5vw, 60px)" }}>
+      <div style={{ 
+        position: "relative", 
+        zIndex: 2, 
+        maxWidth: 1200, 
+        margin: "0 auto", 
+        padding: isMobile ? "0 24px" : "0 clamp(20px, 5vw, 60px)" 
+      }}>
 
         {/* ── NAV ── */}
         <motion.nav
@@ -94,7 +101,14 @@ export default function App() {
             padding: "12px 0",
           }}
         >
-          <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 40px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <div style={{ 
+            maxWidth: 1200, 
+            margin: "0 auto", 
+            padding: isMobile ? "0 20px" : "0 40px", 
+            display: "flex", 
+            justifyContent: "space-between", 
+            alignItems: "center" 
+          }}>
             <div style={{ display: "flex", alignItems: "center" }}>
               <div
                 style={{
@@ -110,19 +124,19 @@ export default function App() {
               >
                 <div
                   style={{
-                    width: 24,
-                    height: 24,
+                    width: 32,
+                    height: 32,
                     borderRadius: "50%",
-                    background: `linear-gradient(135deg, ${C.accent}, ${C.purple})`,
+                    overflow: "hidden",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    fontSize: 10,
-                    color: C.text,
-                    fontWeight: 900,
+                    border: `1px solid ${C.borderLight}`,
+                    background: C.surfaceHigh,
+                    boxShadow: "0 4px 12px rgba(0,0,0,0.3)",
                   }}
                 >
-                  N
+                  <img src="/logo.svg" alt="NP" style={{ width: "70%", height: "70%" }} />
                 </div>
                 <span
                   style={{
@@ -133,18 +147,18 @@ export default function App() {
                     letterSpacing: "0.02em",
                   }}
                 >
-                  Neel Patil
+                  {isMobile ? "Neel" : "Neel Patil"}
                 </span>
               </div>
             </div>
-            <div style={{ display: "flex", gap: 32 }}>
+            <div style={{ display: "flex", gap: isMobile ? 16 : 32 }}>
               {["Skills", "Projects", "Contact"].map((item) => (
                 <a
                   key={item}
                   href={`#${item.toLowerCase()}`}
                   style={{
                     fontFamily: "monospace",
-                    fontSize: 12,
+                    fontSize: isMobile ? 11 : 12,
                     color: C.mutedLight,
                     textDecoration: "none",
                     letterSpacing: "0.08em",
@@ -161,7 +175,7 @@ export default function App() {
         </motion.nav>
 
         {/* Spacer for fixed nav */}
-        <div style={{ height: 80 }} />
+        <div style={{ height: isMobile ? 80 : 40 }} />
 
         {/* ── HERO ── */}
         <motion.section
@@ -172,11 +186,12 @@ export default function App() {
           <div
             style={{
               display: "flex",
-              alignItems: "center",
+              flexDirection: isMobile ? "column" : "row",
+              alignItems: isMobile ? "center" : "center",
               justifyContent: "space-between",
-              gap: 48,
-              padding: "80px 0 60px",
-              flexWrap: "wrap",
+              gap: isMobile ? 60 : 48,
+              padding: isMobile ? "40px 0 60px" : "40px 0 60px",
+              textAlign: isMobile ? "center" : "left",
             }}
           >
             {/* Left */}
@@ -184,7 +199,7 @@ export default function App() {
               initial="hidden"
               animate="visible"
               variants={stagger}
-              style={{ flex: "1 1 380px", minWidth: 0 }}
+              style={{ flex: isMobile ? "1 1 auto" : "1 1 500px", minWidth: 0, width: isMobile ? "100%" : "auto" }}
             >
               <motion.div
                 variants={fadeUp}
@@ -210,7 +225,7 @@ export default function App() {
               <motion.h1
                 variants={fadeUp}
                 style={{
-                  fontSize: "clamp(2.4rem, 6vw, 4.2rem)",
+                  fontSize: isMobile ? "2.6rem" : "clamp(2.4rem, 6vw, 4.2rem)",
                   fontWeight: 900,
                   letterSpacing: "-0.04em",
                   lineHeight: 1.05,
@@ -236,18 +251,17 @@ export default function App() {
                   fontSize: 15.5,
                   color: C.muted,
                   lineHeight: 1.75,
-                  maxWidth: 460,
+                  maxWidth: isMobile ? "100%" : 460,
                   marginBottom: 36,
+                  margin: isMobile ? "0 auto 36px" : "0 0 36px",
                 }}
               >
                 I build stuff, break stuff, debug stuff, and somehow learn from all of
-                it. Mostly into backend systems, cloud, DevOps, competitive
-                programming, and ideas that sound impossible initially but become side
-                projects later.
+                it. Mostly into backend systems, cloud, DevOps, and ideas that sound impossible initially.
               </motion.p>
 
               {/* CTA buttons */}
-              <motion.div variants={fadeUp} style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+              <motion.div variants={fadeUp} style={{ display: "flex", gap: 12, flexWrap: "wrap", justifyContent: isMobile ? "center" : "flex-start" }}>
                 <motion.a
                   href="#projects"
                   whileHover={{ scale: 1.03 }}
@@ -263,9 +277,11 @@ export default function App() {
                     textDecoration: "none",
                     letterSpacing: "0.06em",
                     boxShadow: `0 8px 32px ${C.accent}2e`,
+                    flex: isMobile ? 1 : "initial",
+                    textAlign: "center"
                   }}
                 >
-                  View Projects ↗
+                  Projects ↗
                 </motion.a>
                 <motion.a
                   href="/resume.pdf"
@@ -285,7 +301,9 @@ export default function App() {
                     transition: "all 0.2s",
                     display: "flex",
                     alignItems: "center",
+                    justifyContent: "center",
                     gap: 8,
+                    flex: isMobile ? 1 : "initial"
                   }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.borderColor = C.accent;
@@ -296,7 +314,7 @@ export default function App() {
                     e.currentTarget.style.color = C.mutedLight;
                   }}
                 >
-                  Download Resume ↓
+                  Resume ↓
                 </motion.a>
               </motion.div>
             </motion.div>
@@ -307,8 +325,9 @@ export default function App() {
                 flex: "0 0 auto",
                 display: "flex",
                 flexDirection: "column",
-                alignItems: "flex-end",
+                alignItems: isMobile ? "center" : "flex-end",
                 gap: 28,
+                width: isMobile ? "100%" : "auto"
               }}
             >
               <PhotoCircle />
@@ -319,48 +338,38 @@ export default function App() {
 
         {/* ── ABOUT & SKILLS ── */}
 
-        <section id="about" style={{ padding: "80px 0", borderBottom: `1px solid ${C.border}` }}>
-          <div style={{ display: "flex", gap: 80, flexWrap: "wrap" }}>
+        <section id="about" style={{ padding: isMobile ? "60px 0" : "80px 0", borderBottom: `1px solid ${C.border}` }}>
+          <div style={{ display: "flex", gap: isMobile ? 40 : 80, flexWrap: "wrap" }}>
             {/* Left: About & Experience */}
-            <div style={{ flex: "1 1 500px" }}>
+            <div style={{ flex: isMobile ? "1 1 100%" : "1 1 500px" }}>
               <div style={{ marginBottom: 60 }}>
-                <h2 style={{ fontSize: 42, fontWeight: 900, marginBottom: 24, color: C.text, letterSpacing: "-0.04em" }}>My Journey</h2>
+                <h2 style={{ fontSize: isMobile ? 32 : 42, fontWeight: 900, marginBottom: 24, color: C.text, letterSpacing: "-0.04em" }}>My Journey</h2>
                 <p style={{ fontSize: 16, color: C.muted, lineHeight: 1.8, marginBottom: 20 }}>
                   I’m a Computer Science engineering student passionate about backend
                   development, DevOps, and scalable systems. I build full-stack
                   applications using the MERN stack and explore cloud-native
-                  technologies, Docker, Kubernetes, and automation tools while
-                  continuously sharpening my DSA and problem-solving skills.
+                  technologies while sharpening my DSA skills.
                 </p>
                 <p style={{ fontSize: 15, color: C.mutedLight, lineHeight: 1.8, marginBottom: 32, fontStyle: "italic", opacity: 0.8 }}>
-                  "My journey into tech started with curiosity about how systems and the
-                  web work behind the scenes. Since then, I’ve built projects ranging
-                  from client-server based applications to a DSA & contest tracker that
-                  integrates platforms like LeetCode, Codeforces, and GFG. I enjoy
-                  transforming ideas into real products while continuously exploring new
-                  technologies, building larger-scale systems, and pushing myself toward
-                  creating impactful software in the future."
+                  "I enjoy transforming ideas into real products while continuously exploring new technologies and pushing myself toward creating impactful software."
                 </p>
 
                 <h3 style={{ fontSize: 24, fontWeight: 800, marginBottom: 20, color: C.text }}>Experience</h3>
-                <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: 16, padding: 24 }}>
+                <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: 16, padding: isMobile ? 20 : 24 }}>
                   <div style={{ fontWeight: 700, color: C.text, fontSize: 16, marginBottom: 4 }}>
-                    Public Relation Officer (PRO) - Association of Computer Science and Engineering Students
+                    Public Relation Officer (PRO) - ACSES
                   </div>
                   <div style={{ fontSize: 12, color: C.muted, marginBottom: 12 }}>Aug 2025 - April 2026</div>
                   <p style={{ fontSize: 14, color: C.mutedLight, lineHeight: 1.6 }}>
-                    Represented ACSES as the Public Relation Officer (PRO), managing
-                    communications, event promotions, and organizational outreach.
-                    Collaborated with teams to ensure smooth execution of technical and
-                    non-technical events while improving student engagement and
-                    coordination between students and organizing committees.
+                    Represented Association of Computer Science and Engineering Students, managing
+                    communications and organizational outreach.
                   </p>
                 </div>
               </div>
 
               <div style={{ marginBottom: 60 }}>
-                <h3 style={{ fontSize: 24, fontWeight: 800, marginBottom: 20, color: C.text }}>Hobbies & Interests</h3>
-                <div style={{ display: "flex", gap: 12 }}>
+                <h3 style={{ fontSize: 24, fontWeight: 800, marginBottom: 20, color: C.text }}>Hobbies</h3>
+                <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
                   {["Cricket", "VolleyBall"].map(hobby => (
                     <span key={hobby} style={{ background: C.surface, border: `1px solid ${C.border}`, padding: "10px 20px", borderRadius: 12, fontSize: 14, color: C.muted }}>
                       {hobby}
@@ -369,13 +378,13 @@ export default function App() {
                 </div>
               </div>
 
-              <div>
+              <div style={{ marginBottom: 60 }}>
                 <h3 style={{ fontSize: 24, fontWeight: 800, marginBottom: 20, color: C.text }}>Certifications</h3>
                 <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
                   {[
-                    "Introduction to DevOps", "Introduction to Cloud Computing",
-                    "Introduction to kubernetes", "Getting Started with Git and GitHub",
-                    "Hands-on Introduction to Linux Commandsand", "Shell Scripting"
+                    "DevOps", "Cloud Computing",
+                    "Kubernetes", "Git & GitHub",
+                    "Linux", "Shell Scripting"
                   ].map(cert => (
                     <span key={cert} style={{ background: C.surface, border: `1px solid ${C.border}`, padding: "8px 16px", borderRadius: 10, fontSize: 12, color: C.mutedLight }}>
                       {cert}
@@ -386,14 +395,13 @@ export default function App() {
             </div>
 
             {/* Right: Skills Tag Cloud */}
-            <div id="skills" style={{ flex: "0 1 400px" }}>
-              <h2 style={{ fontSize: 42, fontWeight: 900, marginBottom: 24, color: C.text, letterSpacing: "-0.04em" }}>Skills</h2>
+            <div id="skills" style={{ flex: isMobile ? "1 1 100%" : "0 1 400px" }}>
+              <h2 style={{ fontSize: isMobile ? 32 : 42, fontWeight: 900, marginBottom: 24, color: C.text, letterSpacing: "-0.04em" }}>Skills</h2>
               <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
                 {[
                   "CPP", "C", "React.js", "JavaScript", "Git", "GitHub", "Shell Scripting", "Linux", "Node.js", "MongoDB", "Express.js",
                   "SQL", "Docker", "Kubernetes", "Terraform", "EKS",
-                  "GitLab CI/CD", "Jenkins", "AWS", "Cloud Computing", "DevOps",
-                  "Ansible", "Tailwind CSS"
+                  "GitLab CI/CD", "Jenkins", "AWS", "Ansible", "Tailwind CSS"
                 ].map((s, i) => (
                   <motion.div
                     key={s}

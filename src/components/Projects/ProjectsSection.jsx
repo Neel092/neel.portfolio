@@ -5,7 +5,10 @@ import { C } from "../../constants/designTokens";
 import SectionHeader from "../SectionHeader";
 import ProjectCard from "./ProjectCard";
 
+import useIsMobile from "../../hooks/useIsMobile";
+
 export default function ProjectsSection() {
+  const isMobile = useIsMobile();
   const [activeIdx, setActiveIdx] = useState(0);
   const [direction, setDirection] = useState(0);
 
@@ -43,7 +46,7 @@ export default function ProjectsSection() {
   };
 
   return (
-    <section style={{ marginBottom: 160, position: "relative" }}>
+    <section style={{ marginBottom: isMobile ? 80 : 160, position: "relative" }}>
       <SectionHeader num="02 ──" title="Featured Projects" />
 
       <div
@@ -54,62 +57,71 @@ export default function ProjectsSection() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          minHeight: 520,
+          minHeight: isMobile ? 400 : 520,
         }}
       >
         {/* Navigation Buttons */}
-        <div style={{ position: "absolute", left: -30, zIndex: 20 }}>
-          <motion.button
-            whileHover={{ scale: 1.1, backgroundColor: C.surfaceHigh }}
-            whileTap={{ scale: 0.9 }}
-            onClick={handlePrev}
-            style={{
-              width: 48,
-              height: 48,
-              borderRadius: "50%",
-              background: `${C.surface}ee`,
-              backdropFilter: "blur(8px)",
-              border: `1px solid ${C.border}`,
-              color: C.text,
-              cursor: "pointer",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontSize: 20,
-              boxShadow: "0 8px 30px rgba(0,0,0,0.4)",
-            }}
-          >
-            ‹
-          </motion.button>
-        </div>
+        {!isMobile && (
+          <>
+            <div style={{ position: "absolute", left: -30, zIndex: 20 }}>
+              <motion.button
+                whileHover={{ scale: 1.1, backgroundColor: C.surfaceHigh }}
+                whileTap={{ scale: 0.9 }}
+                onClick={handlePrev}
+                style={{
+                  width: 48,
+                  height: 48,
+                  borderRadius: "50%",
+                  background: `${C.surface}ee`,
+                  backdropFilter: "blur(8px)",
+                  border: `1px solid ${C.border}`,
+                  color: C.text,
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: 20,
+                  boxShadow: "0 8px 30px rgba(0,0,0,0.4)",
+                }}
+              >
+                ‹
+              </motion.button>
+            </div>
 
-        <div style={{ position: "absolute", right: -30, zIndex: 20 }}>
-          <motion.button
-            whileHover={{ scale: 1.1, backgroundColor: C.surfaceHigh }}
-            whileTap={{ scale: 0.9 }}
-            onClick={handleNext}
-            style={{
-              width: 48,
-              height: 48,
-              borderRadius: "50%",
-              background: `${C.surface}ee`,
-              backdropFilter: "blur(8px)",
-              border: `1px solid ${C.border}`,
-              color: C.text,
-              cursor: "pointer",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontSize: 20,
-              boxShadow: "0 8px 30px rgba(0,0,0,0.4)",
-            }}
-          >
-            ›
-          </motion.button>
-        </div>
+            <div style={{ position: "absolute", right: -30, zIndex: 20 }}>
+              <motion.button
+                whileHover={{ scale: 1.1, backgroundColor: C.surfaceHigh }}
+                whileTap={{ scale: 0.9 }}
+                onClick={handleNext}
+                style={{
+                  width: 48,
+                  height: 48,
+                  borderRadius: "50%",
+                  background: `${C.surface}ee`,
+                  backdropFilter: "blur(8px)",
+                  border: `1px solid ${C.border}`,
+                  color: C.text,
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: 20,
+                  boxShadow: "0 8px 30px rgba(0,0,0,0.4)",
+                }}
+              >
+                ›
+              </motion.button>
+            </div>
+          </>
+        )}
 
         {/* Card Container */}
-        <div style={{ width: "100%", maxWidth: 840, position: "relative", touchAction: "none" }}>
+        <div style={{ 
+          width: "100%", 
+          maxWidth: 840, 
+          position: "relative", 
+          touchAction: isMobile ? "pan-y" : "none" 
+        }}>
 
           <AnimatePresence initial={false} custom={direction} mode="popLayout">
             <motion.div
@@ -135,10 +147,10 @@ export default function ProjectsSection() {
                 opacity: { duration: 0.25 },
                 filter: { duration: 0.25 }
               }}
-              style={{ width: "100%", cursor: "grab" }}
-              whileTap={{ cursor: "grabbing" }}
+              style={{ width: "100%", cursor: isMobile ? "default" : "grab" }}
+              whileTap={{ cursor: isMobile ? "default" : "grabbing" }}
             >
-              <div style={{ position: "relative", padding: "10px" }}>
+              <div style={{ position: "relative", padding: isMobile ? "0" : "10px" }}>
                 <div style={{
                   position: "absolute",
                   inset: "20%",

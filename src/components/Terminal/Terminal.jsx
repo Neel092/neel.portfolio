@@ -1,8 +1,10 @@
 import { motion } from "framer-motion";
 import { C } from "../../constants/designTokens";
 import StatusDot from "../StatusDot";
+import useIsMobile from "../../hooks/useIsMobile";
 
 export default function Terminal() {
+  const isMobile = useIsMobile();
   const lines = [
     { prompt: true, text: "docker ps" },
 
@@ -71,14 +73,16 @@ export default function Terminal() {
         overflow: "hidden",
         width: "min(420px, 100%)",
         flexShrink: 0,
-        boxShadow: `0 40px 100px rgba(0,0,0,0.7), 0 0 0 1px ${C.accent}0c`,
+        boxShadow: isMobile 
+          ? `0 20px 60px rgba(0,0,0,0.8), 0 0 40px ${C.accent}15` 
+          : `0 40px 100px rgba(0,0,0,0.7), 0 0 0 1px ${C.accent}0c`,
       }}
     >
       {/* Title bar */}
       <div
         style={{
           background: "#06061460",
-          padding: "10px 16px",
+          padding: isMobile ? "8px 12px" : "10px 16px",
           borderBottom: `1px solid ${C.border}`,
           display: "flex",
           alignItems: "center",
@@ -88,14 +92,14 @@ export default function Terminal() {
         {["#ff5f57", "#ffbd2e", "#28ca41"].map((c, i) => (
           <div
             key={i}
-            style={{ width: 10, height: 10, borderRadius: "50%", background: c }}
+            style={{ width: 8, height: 8, borderRadius: "50%", background: c }}
           />
         ))}
         <span
           style={{
             marginLeft: 10,
             fontFamily: "monospace",
-            fontSize: 11,
+            fontSize: 10,
             color: C.muted,
           }}
         >
@@ -107,10 +111,10 @@ export default function Terminal() {
       {/* Lines */}
       <div
         style={{
-          padding: "18px 20px",
+          padding: isMobile ? "14px 16px" : "18px 20px",
           fontFamily: "monospace",
-          fontSize: 12.5,
-          lineHeight: 2.1,
+          fontSize: isMobile ? 11 : 12.5,
+          lineHeight: isMobile ? 1.8 : 2.1,
         }}
       >
         {lines.map((line, i) => (
