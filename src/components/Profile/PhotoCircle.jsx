@@ -6,14 +6,14 @@ import useIsMobile from "../../hooks/useIsMobile";
 
 export default function PhotoCircle() {
   const isMobile = useIsMobile();
-  
+
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.7 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 1, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-      style={{ 
-        position: "relative", 
+      style={{
+        position: "relative",
         flexShrink: 0,
         margin: isMobile ? "0 auto" : "0"
       }}
@@ -80,10 +80,10 @@ export default function PhotoCircle() {
               gap: 6,
             }}
           >
-            <img 
-              src={ProfilePhoto} 
+            <img
+              src={ProfilePhoto}
               alt="Profile"
-              style={{ width: "100%", height: "100%", objectFit: "cover" }} 
+              style={{ width: "100%", height: "100%", objectFit: "cover" }}
             />
           </div>
         </div>

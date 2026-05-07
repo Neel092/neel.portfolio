@@ -175,7 +175,7 @@ export default function App() {
         </motion.nav>
 
         {/* Spacer for fixed nav */}
-        <div style={{ height: isMobile ? 80 : 40 }} />
+        <div style={{ height: isMobile ? 80 : 100 }} />
 
         {/* ── HERO ── */}
         <motion.section
@@ -190,7 +190,7 @@ export default function App() {
               alignItems: isMobile ? "center" : "center",
               justifyContent: "space-between",
               gap: isMobile ? 60 : 48,
-              padding: isMobile ? "40px 0 60px" : "40px 0 60px",
+              padding: isMobile ? "60px 0 60px" : "60px 0 60px",
               textAlign: isMobile ? "center" : "left",
             }}
           >
