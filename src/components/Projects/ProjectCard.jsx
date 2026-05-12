@@ -14,25 +14,51 @@ export default function ProjectCard({ project, active }) {
 
   return (
     <motion.div
-      animate={{ 
-        scale: isMobile ? 1 : (active ? 1 : 0.9), 
-        opacity: isMobile ? 1 : (active ? 1 : 0.35) 
+      animate={{
+        scale: isMobile ? 1 : (active ? 1 : 0.9),
+        opacity: isMobile ? 1 : (active ? 1 : 0.35)
       }}
       transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
       style={{
         width: "100%",
         minHeight: isMobile ? 400 : 480,
-        background: C.surface,
+        background: `linear-gradient(165deg, ${C.surface} 0%, ${C.bg} 100%)`,
         borderRadius: isMobile ? 16 : 24,
-        border: `1px solid ${active ? project.gradFrom + "40" : C.border}`,
+        border: `1px solid ${active ? project.gradFrom + "30" : C.border}`,
+        borderTop: active ? `1px solid ${project.gradFrom}80` : `1px solid ${C.border}`,
         overflow: "hidden",
         display: "flex",
         flexDirection: "column",
         position: "relative",
-        boxShadow: active ? `0 24px 80px ${project.gradFrom}15` : "none",
-        transition: "border-color 0.4s, box-shadow 0.4s",
+        boxShadow: active ? `0 24px 80px ${project.gradFrom}10, inset 0 0 20px ${project.gradFrom}05` : "none",
+        transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
       }}
     >
+      {/* Mesh Gradient Backgrounds */}
+      {active && (
+        <>
+          <div style={{
+            position: "absolute",
+            top: 0,
+            right: 0,
+            width: "60%",
+            height: "60%",
+            background: `radial-gradient(circle at 100% 0%, ${project.gradFrom}15 0%, transparent 70%)`,
+            zIndex: 0,
+            pointerEvents: "none",
+          }} />
+          <div style={{
+            position: "absolute",
+            bottom: 0,
+            left: 0,
+            width: "60%",
+            height: "60%",
+            background: `radial-gradient(circle at 0% 100%, ${project.gradTo}12 0%, transparent 70%)`,
+            zIndex: 0,
+            pointerEvents: "none",
+          }} />
+        </>
+      )}
       {/* Large background number for depth */}
       {!isMobile && (
         <div
@@ -62,13 +88,13 @@ export default function ProjectCard({ project, active }) {
       />
 
       {/* Body */}
-      <div style={{ 
-        padding: isMobile ? "24px 20px" : "48px 48px 40px", 
-        flex: 1, 
-        display: "flex", 
-        flexDirection: "column", 
-        position: "relative", 
-        zIndex: 1 
+      <div style={{
+        padding: isMobile ? "24px 20px" : "48px 48px 40px",
+        flex: 1,
+        display: "flex",
+        flexDirection: "column",
+        position: "relative",
+        zIndex: 1
       }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 12 }}>
           <div
@@ -132,11 +158,11 @@ export default function ProjectCard({ project, active }) {
           {project.subtitle}
         </p>
 
-        <div style={{ 
-          display: "flex", 
-          gap: isMobile ? 32 : 60, 
-          flexWrap: "wrap", 
-          marginBottom: isMobile ? 24 : 40 
+        <div style={{
+          display: "flex",
+          gap: isMobile ? 32 : 60,
+          flexWrap: "wrap",
+          marginBottom: isMobile ? 24 : 40
         }}>
           <div style={{ flex: "1 1 300px" }}>
             <p style={{ fontSize: isMobile ? 14 : 16, color: C.mutedLight, lineHeight: 1.7, marginBottom: 24 }}>
@@ -215,7 +241,7 @@ export default function ProjectCard({ project, active }) {
           </div>
         </div>
 
-        <div style={{ display: "flex", gap: 12, marginTop: "auto", flexWrap: "wrap" }}>
+        <div style={{ display: "flex", gap: 12, marginTop: "auto", flexWrap: "wrap", justifyContent: isMobile ? "stretch" : "center" }}>
           <button
             onClick={() => setOpen((v) => !v)}
             style={{

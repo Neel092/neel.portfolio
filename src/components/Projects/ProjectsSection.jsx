@@ -57,13 +57,13 @@ export default function ProjectsSection() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          minHeight: isMobile ? 400 : 520,
+          height: isMobile ? 600 : 520,
         }}
       >
         {/* Navigation Buttons */}
         {!isMobile && (
           <>
-            <div style={{ position: "absolute", left: -30, zIndex: 20 }}>
+            <div style={{ position: "absolute", left: -30, zIndex: 20, top: "50%", transform: "translateY(-50%)" }}>
               <motion.button
                 whileHover={{ scale: 1.1, backgroundColor: C.surfaceHigh }}
                 whileTap={{ scale: 0.9 }}
@@ -88,7 +88,7 @@ export default function ProjectsSection() {
               </motion.button>
             </div>
 
-            <div style={{ position: "absolute", right: -30, zIndex: 20 }}>
+            <div style={{ position: "absolute", right: -30, zIndex: 20, top: "50%", transform: "translateY(-50%)" }}>
               <motion.button
                 whileHover={{ scale: 1.1, backgroundColor: C.surfaceHigh }}
                 whileTap={{ scale: 0.9 }}
@@ -116,11 +116,11 @@ export default function ProjectsSection() {
         )}
 
         {/* Card Container */}
-        <div style={{ 
-          width: "100%", 
-          maxWidth: 840, 
-          position: "relative", 
-          touchAction: isMobile ? "pan-y" : "none" 
+        <div style={{
+          width: "100%",
+          maxWidth: 840,
+          position: "relative",
+          touchAction: isMobile ? "pan-y" : "none"
         }}>
 
           <AnimatePresence initial={false} custom={direction} mode="popLayout">
@@ -167,28 +167,73 @@ export default function ProjectsSection() {
 
       </div>
 
-      {/* Navigation dots */}
-      <div style={{ display: "flex", gap: 10, marginTop: 30, alignItems: "center", justifyContent: "center" }}>
-        {projects.map((p, i) => (
-          <button
-            key={p.id}
-            onClick={() => {
-              setDirection(i > activeIdx ? 1 : -1);
-              setActiveIdx(i);
-            }}
-            style={{
-              width: i === activeIdx ? 32 : 8,
-              height: 6,
-              borderRadius: 3,
-              background: i === activeIdx ? `linear-gradient(90deg, ${p.gradFrom}, ${p.gradTo})` : C.border,
-              border: "none",
-              cursor: "pointer",
-              transition: "all 0.3s ease",
-              padding: 0,
-              opacity: i === activeIdx ? 1 : 0.4,
-            }}
-          />
-        ))}
+      {/* Navigation for Mobile & Dots */}
+      <div style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        gap: 20,
+        marginTop: 40
+      }}>
+        {isMobile && (
+          <div style={{ display: "flex", gap: 16 }}>
+            <motion.button
+              whileTap={{ scale: 0.9 }}
+              onClick={handlePrev}
+              style={{
+                padding: "12px 24px",
+                borderRadius: 12,
+                background: C.surfaceHigh,
+                border: `1px solid ${C.border}`,
+                color: C.text,
+                fontSize: 14,
+                fontFamily: "monospace"
+              }}
+            >
+              ← Prev
+            </motion.button>
+            <motion.button
+              whileTap={{ scale: 0.9 }}
+              onClick={handleNext}
+              style={{
+                padding: "12px 24px",
+                borderRadius: 12,
+                background: C.accent,
+                border: "none",
+                color: C.text,
+                fontSize: 14,
+                fontFamily: "monospace",
+                fontWeight: "bold",
+                boxShadow: `0 8px 20px ${C.accent}40`
+              }}
+            >
+              Next →
+            </motion.button>
+          </div>
+        )}
+
+        <div style={{ display: "flex", gap: 10, alignItems: "center", justifyContent: "center", height: 20 }}>
+          {projects.map((p, i) => (
+            <button
+              key={p.id}
+              onClick={() => {
+                setDirection(i > activeIdx ? 1 : -1);
+                setActiveIdx(i);
+              }}
+              style={{
+                width: i === activeIdx ? 32 : 8,
+                height: 6,
+                borderRadius: 3,
+                background: i === activeIdx ? `linear-gradient(90deg, ${p.gradFrom}, ${p.gradTo})` : C.border,
+                border: "none",
+                cursor: "pointer",
+                transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+                padding: 0,
+                opacity: i === activeIdx ? 1 : 0.4,
+              }}
+            />
+          ))}
+        </div>
       </div>
     </section>
   );
