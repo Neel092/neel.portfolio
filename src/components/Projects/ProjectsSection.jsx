@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { projects } from "../../constants/data";
 import { C } from "../../constants/designTokens";
-import SectionHeader from "../SectionHeader";
+
 import ProjectCard from "./ProjectCard";
 
 import useIsMobile from "../../hooks/useIsMobile";
@@ -47,7 +47,35 @@ export default function ProjectsSection() {
 
   return (
     <section style={{ marginBottom: isMobile ? 80 : 160, position: "relative" }}>
-      <SectionHeader num="02 ──" title="Featured Projects" />
+      <div style={{ marginBottom: 56 }}>
+        <div style={{
+          display: "flex", alignItems: "center",
+          justifyContent: "space-between",
+          flexWrap: "wrap", gap: 20, marginBottom: 8
+        }}>
+          <h1 style={{
+            fontSize: isMobile ? "2.8rem" : "clamp(3.5rem, 8vw, 6rem)",
+            fontWeight: 900, color: "#ffffff",
+            letterSpacing: "-0.02em", margin: 0,
+            textTransform: "uppercase"
+          }}>
+            WORKS
+          </h1>
+          <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+            <div style={{ width: 10, height: 10, borderRadius: "50%", background: "#ffffff" }} />
+            <span style={{
+              background: "#0099ff", color: "#ffffff",
+              padding: "8px 24px", borderRadius: 4,
+              fontFamily: "monospace", fontSize: 11,
+              fontWeight: 600, letterSpacing: "0.12em",
+              textTransform: "uppercase"
+            }}>EXPLORE</span>
+          </div>
+        </div>
+        <p style={{ fontSize: 14, color: "#555", maxWidth: 500, margin: 0 }}>
+          Robust architecture. Scalable deployments. High-performance systems. The proof is in our projects.
+        </p>
+      </div>
 
       <div
         style={{
@@ -65,23 +93,22 @@ export default function ProjectsSection() {
           <>
             <div style={{ position: "absolute", left: -30, zIndex: 20, top: "50%", transform: "translateY(-50%)" }}>
               <motion.button
-                whileHover={{ scale: 1.1, backgroundColor: C.surfaceHigh }}
+                whileHover={{ scale: 1.1, backgroundColor: "#1a1a1a" }}
                 whileTap={{ scale: 0.9 }}
                 onClick={handlePrev}
                 style={{
                   width: 48,
                   height: 48,
                   borderRadius: "50%",
-                  background: `${C.surface}ee`,
+                  background: "#0d0d0d",
                   backdropFilter: "blur(8px)",
-                  border: `1px solid ${C.border}`,
-                  color: C.text,
+                  border: "1px solid #1c1c1c",
+                  color: "#fff",
                   cursor: "pointer",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
                   fontSize: 20,
-                  boxShadow: "0 8px 30px rgba(0,0,0,0.4)",
                 }}
               >
                 ‹
@@ -90,23 +117,22 @@ export default function ProjectsSection() {
 
             <div style={{ position: "absolute", right: -30, zIndex: 20, top: "50%", transform: "translateY(-50%)" }}>
               <motion.button
-                whileHover={{ scale: 1.1, backgroundColor: C.surfaceHigh }}
+                whileHover={{ scale: 1.1, backgroundColor: "#1a1a1a" }}
                 whileTap={{ scale: 0.9 }}
                 onClick={handleNext}
                 style={{
                   width: 48,
                   height: 48,
                   borderRadius: "50%",
-                  background: `${C.surface}ee`,
+                  background: "#0d0d0d",
                   backdropFilter: "blur(8px)",
-                  border: `1px solid ${C.border}`,
-                  color: C.text,
+                  border: "1px solid #1c1c1c",
+                  color: "#fff",
                   cursor: "pointer",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
                   fontSize: 20,
-                  boxShadow: "0 8px 30px rgba(0,0,0,0.4)",
                 }}
               >
                 ›
@@ -151,14 +177,6 @@ export default function ProjectsSection() {
               whileTap={{ cursor: isMobile ? "default" : "grabbing" }}
             >
               <div style={{ position: "relative", padding: isMobile ? "0" : "10px" }}>
-                <div style={{
-                  position: "absolute",
-                  inset: "20%",
-                  background: projects[activeIdx].gradFrom,
-                  filter: "blur(80px)",
-                  opacity: 0.1,
-                  zIndex: -1,
-                }} />
                 <ProjectCard project={projects[activeIdx]} active={true} />
               </div>
             </motion.div>
@@ -183,8 +201,8 @@ export default function ProjectsSection() {
               style={{
                 padding: "12px 24px",
                 borderRadius: 12,
-                background: C.surfaceHigh,
-                border: `1px solid ${C.border}`,
+                background: "#1a1a1a",
+                border: "1px solid #1c1c1c",
                 color: C.text,
                 fontSize: 14,
                 fontFamily: "monospace"
@@ -198,13 +216,12 @@ export default function ProjectsSection() {
               style={{
                 padding: "12px 24px",
                 borderRadius: 12,
-                background: C.accent,
+                background: "#ffffff",
                 border: "none",
-                color: C.text,
+                color: "#000000",
                 fontSize: 14,
                 fontFamily: "monospace",
                 fontWeight: "bold",
-                boxShadow: `0 8px 20px ${C.accent}40`
               }}
             >
               Next →
@@ -224,7 +241,7 @@ export default function ProjectsSection() {
                 width: i === activeIdx ? 32 : 8,
                 height: 6,
                 borderRadius: 3,
-                background: i === activeIdx ? `linear-gradient(90deg, ${p.gradFrom}, ${p.gradTo})` : C.border,
+                background: i === activeIdx ? "#ffffff" : "#2a2a2a",
                 border: "none",
                 cursor: "pointer",
                 transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",

@@ -14,51 +14,29 @@ export default function ProjectCard({ project, active }) {
 
   return (
     <motion.div
+      whileHover={{ 
+        scale: 1.02, 
+        borderColor: "#ffffff",
+        background: `linear-gradient(165deg, #141414 0%, #0d0d0d 100%)`
+      }}
       animate={{
         scale: isMobile ? 1 : (active ? 1 : 0.9),
         opacity: isMobile ? 1 : (active ? 1 : 0.35)
       }}
-      transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.3 }}
       style={{
         width: "100%",
         minHeight: isMobile ? 400 : 480,
-        background: `linear-gradient(165deg, ${C.surface} 0%, ${C.bg} 100%)`,
+        background: `linear-gradient(165deg, #0d0d0d 0%, #000 100%)`,
         borderRadius: isMobile ? 16 : 24,
-        border: `1px solid ${active ? project.gradFrom + "30" : C.border}`,
-        borderTop: active ? `1px solid ${project.gradFrom}80` : `1px solid ${C.border}`,
+        border: active ? "1px solid rgba(255,255,255,0.15)" : "1px solid #1c1c1c",
+        borderTop: active ? "1px solid rgba(255,255,255,0.4)" : "1px solid #1c1c1c",
         overflow: "hidden",
         display: "flex",
         flexDirection: "column",
         position: "relative",
-        boxShadow: active ? `0 24px 80px ${project.gradFrom}10, inset 0 0 20px ${project.gradFrom}05` : "none",
-        transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
       }}
     >
-      {/* Mesh Gradient Backgrounds */}
-      {active && (
-        <>
-          <div style={{
-            position: "absolute",
-            top: 0,
-            right: 0,
-            width: "60%",
-            height: "60%",
-            background: `radial-gradient(circle at 100% 0%, ${project.gradFrom}15 0%, transparent 70%)`,
-            zIndex: 0,
-            pointerEvents: "none",
-          }} />
-          <div style={{
-            position: "absolute",
-            bottom: 0,
-            left: 0,
-            width: "60%",
-            height: "60%",
-            background: `radial-gradient(circle at 0% 100%, ${project.gradTo}12 0%, transparent 70%)`,
-            zIndex: 0,
-            pointerEvents: "none",
-          }} />
-        </>
-      )}
       {/* Large background number for depth */}
       {!isMobile && (
         <div
@@ -68,8 +46,8 @@ export default function ProjectCard({ project, active }) {
             right: 20,
             fontSize: "16rem",
             fontWeight: 900,
-            color: project.gradFrom,
-            opacity: 0.04,
+            color: "#ffffff",
+            opacity: 0.03,
             pointerEvents: "none",
             userSelect: "none",
             lineHeight: 1,
@@ -83,7 +61,7 @@ export default function ProjectCard({ project, active }) {
       <div
         style={{
           height: 4,
-          background: `linear-gradient(90deg, ${project.gradFrom}, ${project.gradTo})`,
+          background: "#ffffff",
         }}
       />
 
@@ -102,8 +80,8 @@ export default function ProjectCard({ project, active }) {
               display: "flex",
               alignItems: "center",
               gap: 10,
-              background: project.statusColor + "14",
-              border: `1px solid ${project.statusColor}30`,
+              background: "rgba(255,255,255,0.05)",
+              border: "1px solid rgba(255,255,255,0.1)",
               borderRadius: 20,
               padding: "4px 14px",
             }}
@@ -113,7 +91,7 @@ export default function ProjectCard({ project, active }) {
               style={{
                 fontFamily: "monospace",
                 fontSize: 10,
-                color: project.statusColor,
+                color: "#888",
                 letterSpacing: "0.12em",
                 textTransform: "uppercase",
               }}
@@ -125,7 +103,7 @@ export default function ProjectCard({ project, active }) {
             style={{
               fontFamily: "monospace",
               fontSize: 12,
-              color: C.muted,
+              color: "#333",
               letterSpacing: "0.2em",
             }}
           >
@@ -137,7 +115,7 @@ export default function ProjectCard({ project, active }) {
           style={{
             fontSize: isMobile ? "1.8rem" : "clamp(2rem, 5vw, 3rem)",
             fontWeight: 900,
-            color: C.text,
+            color: "#fff",
             letterSpacing: "-0.04em",
             marginBottom: 8,
             lineHeight: 1.1,
@@ -149,7 +127,7 @@ export default function ProjectCard({ project, active }) {
           style={{
             fontFamily: "monospace",
             fontSize: 13,
-            color: project.gradFrom,
+            color: "#555",
             marginBottom: 24,
             letterSpacing: "0.05em",
             opacity: 0.8,
@@ -177,8 +155,8 @@ export default function ProjectCard({ project, active }) {
                   exit={{ opacity: 0, height: 0 }}
                   style={{
                     overflow: "hidden",
-                    background: C.surfaceHigh,
-                    borderLeft: `2px solid ${project.gradFrom}`,
+                    background: "#0d0d0d",
+                    borderLeft: `2px solid #fff`,
                     padding: "16px 20px",
                     marginBottom: 24,
                     fontSize: 14,
@@ -198,7 +176,7 @@ export default function ProjectCard({ project, active }) {
               <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
                 {project.highlights.map((h) => (
                   <span key={h} style={{ fontSize: 11, color: C.text, display: "flex", alignItems: "center", gap: 6 }}>
-                    <span style={{ color: project.gradFrom }}>•</span> {h}
+                    <span style={{ color: "#fff" }}>•</span> {h}
                   </span>
                 ))}
               </div>
@@ -209,7 +187,7 @@ export default function ProjectCard({ project, active }) {
                 <div style={{ fontSize: 10, color: C.muted, textTransform: "uppercase", letterSpacing: "0.15em", marginBottom: 12 }}>Roadmap</div>
                 <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
                   {project.futureGoals.map((goal) => (
-                    <span key={goal} style={{ fontSize: 11, color: project.gradFrom, display: "flex", alignItems: "center", gap: 6, fontWeight: 600 }}>
+                    <span key={goal} style={{ fontSize: 11, color: "#555", display: "flex", alignItems: "center", gap: 6, fontWeight: 500 }}>
                       <span style={{ opacity: 0.5 }}>→</span> {goal}
                     </span>
                   ))}
@@ -227,10 +205,11 @@ export default function ProjectCard({ project, active }) {
                       fontFamily: "monospace",
                       fontSize: 11,
                       padding: "4px 10px",
-                      background: C.bg,
-                      border: `1px solid ${C.borderLight}`,
-                      borderRadius: 6,
-                      color: C.muted,
+                      background: "transparent",
+                      border: "none",
+                      borderBottom: `1px solid #2a2a2a`,
+                      borderRadius: 0,
+                      color: "#555",
                     }}
                   >
                     {t}
@@ -247,17 +226,17 @@ export default function ProjectCard({ project, active }) {
             style={{
               padding: isMobile ? "10px 16px" : "12px 24px",
               borderRadius: 12,
-              border: `1px solid ${C.border}`,
-              background: C.surfaceHigh,
-              color: C.text,
+              border: `1px solid #1c1c1c`,
+              background: "#0d0d0d",
+              color: "#888",
               fontFamily: "monospace",
               fontSize: 11,
               cursor: "pointer",
               transition: "all 0.2s",
               flex: isMobile ? 1 : "initial"
             }}
-            onMouseEnter={(e) => (e.currentTarget.style.borderColor = project.gradFrom)}
-            onMouseLeave={(e) => (e.currentTarget.style.borderColor = C.border)}
+            onMouseEnter={(e) => (e.currentTarget.style.borderColor = "#ffffff")}
+            onMouseLeave={(e) => (e.currentTarget.style.borderColor = "#1c1c1c")}
           >
             {open ? "[-] Close" : "[+] Details"}
           </button>
@@ -266,17 +245,16 @@ export default function ProjectCard({ project, active }) {
             style={{
               padding: isMobile ? "10px 16px" : "12px 24px",
               borderRadius: 12,
-              background: `linear-gradient(135deg, ${project.gradFrom}, ${project.gradTo})`,
-              color: C.text,
+              background: "#ffffff",
+              color: "#000000",
               fontFamily: "monospace",
               fontSize: 11,
-              fontWeight: 700,
+              fontWeight: 500,
               textDecoration: "none",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
               gap: 8,
-              boxShadow: `0 8px 24px ${project.gradFrom}33`,
               flex: isMobile ? 1 : "initial"
             }}
           >
@@ -288,9 +266,9 @@ export default function ProjectCard({ project, active }) {
               style={{
                 padding: isMobile ? "10px 16px" : "12px 24px",
                 borderRadius: 12,
-                border: `1px solid ${project.gradTo}40`,
+                border: `1px solid #2a2a2a`,
                 background: "transparent",
-                color: project.gradTo,
+                color: "#888",
                 fontFamily: "monospace",
                 fontSize: 11,
                 textDecoration: "none",
@@ -300,6 +278,8 @@ export default function ProjectCard({ project, active }) {
                 gap: 8,
                 flex: isMobile ? "1 1 100%" : "initial"
               }}
+              onMouseEnter={(e) => { e.currentTarget.style.borderColor = "#fff"; e.currentTarget.style.color = "#fff"; }}
+              onMouseLeave={(e) => { e.currentTarget.style.borderColor = "#2a2a2a"; e.currentTarget.style.color = "#888"; }}
             >
               ↗ Demo
             </a>
