@@ -1,5 +1,3 @@
-import { C } from "./designTokens";
-
 export const projects = [
   {
     id: 1,
@@ -10,7 +8,6 @@ export const projects = [
     subtitle: "Client-Server Computing",
     desc: "A multi-threaded client-server application for mathematical computations using advanced socket programming in C.",
     highlights: ["Socket Programming", "Multi-threading", "C Networking", "Client-Server Architecture"],
-    // futureGoals: ["Thread Pool implementation", "ASIO", "Non-blocking io"],
     tech: ["C", "Sockets", "Multi-threading", "Networking"],
     detail: "This project implements a robust communication protocol between a central server and multiple clients, allowing concurrent mathematical processing and data synchronization.",
     github: "https://github.com/Neel092/socket-based-client-server-calculator",
