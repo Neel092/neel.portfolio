@@ -53,12 +53,7 @@ h1 {
 
 
 
-@keyframes rotate-text {
-  0%, 15% { opacity: 0; transform: translateY(20px); }
-  20%, 40% { opacity: 1; transform: translateY(0px); }
-  45%, 60% { opacity: 0; transform: translateY(-20px); }
-  100% { opacity: 0; }
-}
+
 
 
 

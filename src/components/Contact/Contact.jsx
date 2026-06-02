@@ -253,14 +253,14 @@ export default function Contact() {
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
               <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-                <div style={{ width: 44, height: 44, borderRadius: 12, background: "#000", display: "flex", alignItems: "center", justifyContent: "center", border: `1px solid #1c1c1c`, fontSize: 20 }}>✉</div>
+                <div style={{ width: 44, height: 44, borderRadius: 12, background: "#000", display: "flex", alignItems: "center", justifyContent: "center", border: `1px solid #1c1c1c`, fontFamily: "monospace", fontSize: 13, color: "#888", letterSpacing: 0 }}>@</div>
                 <div>
                   <div style={{ fontSize: 11, color: C.muted, marginBottom: 2 }}>Email</div>
                   <div style={{ fontSize: 14, color: C.text, fontWeight: 500 }}>neelpatil092@gmail.com</div>
                 </div>
               </div>
               <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-                <div style={{ width: 44, height: 44, borderRadius: 12, background: "#000", display: "flex", alignItems: "center", justifyContent: "center", border: `1px solid #1c1c1c`, fontSize: 20 }}>📍</div>
+                <div style={{ width: 44, height: 44, borderRadius: 12, background: "#000", display: "flex", alignItems: "center", justifyContent: "center", border: `1px solid #1c1c1c`, fontFamily: "monospace", fontSize: 13, color: "#888" }}>IN</div>
                 <div>
                   <div style={{ fontSize: 11, color: C.muted, marginBottom: 2 }}>Location</div>
                   <div style={{ fontSize: 14, color: C.text, fontWeight: 500 }}>Mumbai, India</div>
@@ -284,16 +284,15 @@ export default function Contact() {
 
       {/* Footer */}
       <motion.footer variants={fadeUp} style={{ marginTop: isMobile ? 80 : 120 }}>
-        {/* Big NEEL watermark */}
+        {/* NEEL watermark + green dot together */}
         <div style={{
-          textAlign: "center",
+          position: "relative",
           overflow: "hidden",
           marginBottom: 0,
-          lineHeight: 0.85,
         }}>
           <span style={{
             fontFamily: "'Inter', sans-serif",
-            fontSize: "clamp(80px, 20vw, 200px)",
+            fontSize: "clamp(60px, 18vw, 200px)",
             fontWeight: 900,
             color: "#ffffff",
             opacity: 0.05,
@@ -301,25 +300,24 @@ export default function Contact() {
             textTransform: "uppercase",
             userSelect: "none",
             display: "block",
+            textAlign: "center",
+            lineHeight: 0.85,
           }}>
             NEEL
           </span>
-        </div>
 
-        {/* Green circle accent — like reference footer */}
-        <div style={{ position: "relative" }}>
+          {/* Green dot — bottom right of NEEL, like reference */}
           <motion.div
             animate={{ scale: [1, 1.08, 1] }}
             transition={{ repeat: Infinity, duration: 3 }}
             style={{
               position: "absolute",
-              right: "8%",
-              bottom: 20,
-              width: 48,
-              height: 48,
+              bottom: isMobile ? 4 : 8,
+              right: isMobile ? "8%" : "18%",
+              width: isMobile ? 28 : 48,
+              height: isMobile ? 28 : 48,
               borderRadius: "50%",
               background: "#7FFF00",
-              zIndex: 1,
             }}
           />
         </div>

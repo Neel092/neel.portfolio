@@ -34,6 +34,13 @@ export default function App() {
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  const roles = ["PROBLEM SOLVER", "BACKEND ENGINEER", "DEVOPS"];
+  const [roleIdx, setRoleIdx] = useState(0);
+  useEffect(() => {
+    const t = setInterval(() => setRoleIdx(i => (i + 1) % roles.length), 3000);
+    return () => clearInterval(t);
+  }, []);
+
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -194,7 +201,8 @@ export default function App() {
                     fontFamily: "'Inter', sans-serif",
                     fontSize: 24, fontWeight: 900,
                     color: "#ffffff", textDecoration: "none",
-                    letterSpacing: "0.1em"
+                    letterSpacing: "0.1em",
+                    cursor: "pointer"
                   }}
                 >
                   {label}
@@ -215,14 +223,7 @@ export default function App() {
         >
 
 
-          {/* Floating blue circle */}
-          <div style={{
-            position: "absolute", left: isMobile ? "55%" : "58%", top: isMobile ? 60 : 80,
-            width: isMobile ? 40 : 70, height: isMobile ? 40 : 70,
-            borderRadius: "50%", background: "#0099ff",
-            opacity: 0.9, zIndex: 1, pointerEvents: "none",
-            animation: "float-orb 6s ease-in-out infinite"
-          }} />
+          {/* Floating blue circle (removed) */}
 
           <Particles />
 
@@ -239,7 +240,13 @@ export default function App() {
             {/* Left */}
             <motion.div
               initial="hidden" animate="visible" variants={stagger}
-              style={{ flex: isMobile ? "1 1 auto" : "1 1 480px", minWidth: 0 }}
+              style={{
+                flex: isMobile ? "1 1 auto" : "1 1 480px",
+                minWidth: 0,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: isMobile ? "center" : "flex-start",
+              }}
             >
               {/* Signature GIF / name script — reference has animated signature */}
               <motion.div variants={fadeUp} style={{ marginBottom: 8 }}>
@@ -257,24 +264,39 @@ export default function App() {
               </motion.div>
 
               {/* Role — big bold rotating words */}
-              <motion.div variants={fadeUp} style={{ position: "relative", height: isMobile ? 70 : 100, marginBottom: 16, overflow: "hidden" }}>
-                {["Problem Solver", "Backend Engineer", "DevOps"].map((role, i) => (
-                  <span key={role} style={{
-                    position: "absolute", left: isMobile ? "50%" : 0,
-                    transform: isMobile ? "translateX(-50%)" : "none",
-                    fontFamily: "'Inter', sans-serif",
-                    fontSize: isMobile ? "2rem" : "clamp(2.4rem, 5vw, 3.8rem)",
-                    fontWeight: 900,
-                    color: "#ffffff",
-                    textTransform: "uppercase",
-                    letterSpacing: "-0.03em",
-                    lineHeight: 1,
-                    opacity: 0,
-                    whiteSpace: "nowrap",
-                    animation: `rotate-text 9s ease-in-out infinite`,
-                    animationDelay: `${i * 3}s`
-                  }}>{role}</span>
-                ))}
+              <motion.div variants={fadeUp} style={{
+                height: isMobile ? "auto" : 110,
+                minHeight: 56,
+                marginBottom: 16,
+                overflow: "hidden",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: isMobile ? "center" : "flex-start",
+              }}>
+                <AnimatePresence mode="wait">
+                  <motion.span
+                    key={roles[roleIdx]}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ duration: 0.5, ease: "easeOut" }}
+                    style={{
+                      fontFamily: "'Inter', sans-serif",
+                      fontSize: isMobile
+                        ? "clamp(1.8rem, 7vw, 2.2rem)"
+                        : "clamp(2rem, 4vw, 3.2rem)",
+                      fontWeight: 900,
+                      color: "#ffffff",
+                      textTransform: "uppercase",
+                      letterSpacing: "-0.03em",
+                      lineHeight: 1,
+                      whiteSpace: "nowrap",
+                      display: "block",
+                    }}
+                  >
+                    {roles[roleIdx]}
+                  </motion.span>
+                </AnimatePresence>
               </motion.div>
 
               <motion.p variants={fadeUp} style={{
@@ -295,7 +317,9 @@ export default function App() {
                     background: "#0099ff", color: "#ffffff",
                     fontFamily: "monospace", fontSize: 12, fontWeight: 600,
                     textDecoration: "none", letterSpacing: "0.1em",
-                    textTransform: "uppercase"
+                    textTransform: "uppercase",
+                    width: isMobile ? "auto" : undefined,
+                    minWidth: isMobile ? 130 : undefined,
                   }}
                 >EXPLORE</motion.a>
                 <motion.a href="/resume.pdf" target="_blank" whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
@@ -304,7 +328,9 @@ export default function App() {
                     border: "1px solid #2a2a2a", background: "transparent",
                     color: "#888", fontFamily: "monospace", fontSize: 12,
                     textDecoration: "none", letterSpacing: "0.1em",
-                    textTransform: "uppercase", transition: "all 0.2s"
+                    textTransform: "uppercase", transition: "all 0.2s",
+                    width: isMobile ? "auto" : undefined,
+                    minWidth: isMobile ? 130 : undefined,
                   }}
                   onMouseEnter={e => { e.currentTarget.style.borderColor = "#fff"; e.currentTarget.style.color = "#fff"; }}
                   onMouseLeave={e => { e.currentTarget.style.borderColor = "#2a2a2a"; e.currentTarget.style.color = "#888"; }}
@@ -378,7 +404,6 @@ export default function App() {
         {/* ── ABOUT & SKILLS ── */}
         <section id="about" style={{ padding: isMobile ? "80px 0" : "120px 0", borderBottom: "1px solid #1c1c1c" }}>
 
-          {/* WORKS / ABOUT section heading — reference style */}
           <div style={{ marginBottom: 60 }}>
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 20, marginBottom: 24 }}>
               <h1 style={{ fontSize: isMobile ? "3rem" : "clamp(4rem, 10vw, 7rem)", fontWeight: 900, color: "#fff", letterSpacing: "-0.02em", margin: 0 }}>

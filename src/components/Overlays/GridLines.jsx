@@ -1,5 +1,3 @@
-import { C } from "../../constants/designTokens";
-
 export default function GridLines() {
   return (
     <div
