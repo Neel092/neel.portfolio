@@ -8,19 +8,18 @@ This portfolio reflects who I am as an engineering student — someone constantl
 
 ---
 
-## 🚀 Tech Stack
+## Tech Stack
 
 - React.js
 - Framer Motion
 - JavaScript
 - CSS
 - Vite
-- Docker
 - Git & GitHub
 
 ---
 
-## ✨ Features
+##  Features
 
 - Smooth animations with Framer Motion
 - Interactive terminal-inspired UI
@@ -33,7 +32,7 @@ This portfolio reflects who I am as an engineering student — someone constantl
 
 ---
 
-## 🧠 About Me
+##  About Me
 
 I’m a Computer Science engineering student passionate about:
 
@@ -48,7 +47,7 @@ Currently building projects while improving DSA and exploring scalable systems.
 
 ---
 
-## 📂 Projects Mentioned
+##  Projects Mentioned
 
 - DSA & Contest Tracker
 - Client-Server Based Calculator
@@ -57,7 +56,7 @@ Currently building projects while improving DSA and exploring scalable systems.
 
 ---
 
-## ⚙️ Run Locally
+##  Run Locally
 
 Clone the project
 
@@ -85,15 +84,16 @@ npm run dev
 
 ---
 
-## 🌐 Connect With Me
+##  Connect With Me
 
+- Portfolio: <https://neelpatil.in>
 - GitHub: <https://github.com/Neel092>
 - LinkedIn: <https://www.linkedin.com/in/neel-patil-56bbb6334/>
 - Instagram: <https://www.instagram.com/_neelpatil_07/>
 
 ---
 
-## 📌 Current Status
+##  Current Status
 
 ```bash
 building projects...
@@ -104,7 +104,7 @@ dreams still under construction.
 
 ---
 
-## ⭐ Future Goals
+##  Future Goals
 
 - Build scalable backend systems
 - Crack top internships
@@ -114,6 +114,6 @@ dreams still under construction.
 
 ---
 
-## 📜 License
+##  License
 
 This project is open-source and available under the MIT License.

@@ -12,8 +12,13 @@ import ProfilePhoto from "./components/Profile/Profile_Photo.jpeg";
 import ProjectsSection from "./components/Projects/ProjectsSection";
 import Contact from "./components/Contact/Contact";
 
+import GitHubStats from "./components/Profile/GitHubStats";
+import NotesSection from "./components/Notes/NotesSection";
+
 import useIsMobile from "./hooks/useIsMobile";
 import "./index.css";
+
+const ROLES = ["PROBLEM SOLVER", "BACKEND ENGINEER", "DEVOPS"];
 
 export default function App() {
   const isMobile = useIsMobile();
@@ -34,10 +39,9 @@ export default function App() {
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const roles = ["PROBLEM SOLVER", "BACKEND ENGINEER", "DEVOPS"];
   const [roleIdx, setRoleIdx] = useState(0);
   useEffect(() => {
-    const t = setInterval(() => setRoleIdx(i => (i + 1) % roles.length), 3000);
+    const t = setInterval(() => setRoleIdx(i => (i + 1) % ROLES.length), 3000);
     return () => clearInterval(t);
   }, []);
 
@@ -67,6 +71,7 @@ export default function App() {
       <NoiseOverlay />
       <GridLines />
       {!isMobile && <FollowCursor />}
+
 
       <div style={{
         position: "relative",
@@ -275,7 +280,7 @@ export default function App() {
               }}>
                 <AnimatePresence mode="wait">
                   <motion.span
-                    key={roles[roleIdx]}
+                    key={ROLES[roleIdx]}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -20 }}
@@ -294,7 +299,7 @@ export default function App() {
                       display: "block",
                     }}
                   >
-                    {roles[roleIdx]}
+                    {ROLES[roleIdx]}
                   </motion.span>
                 </AnimatePresence>
               </motion.div>
@@ -336,6 +341,8 @@ export default function App() {
                   onMouseLeave={e => { e.currentTarget.style.borderColor = "#2a2a2a"; e.currentTarget.style.color = "#888"; }}
                 >RESUME ↓</motion.a>
               </motion.div>
+
+
             </motion.div>
 
             {/* RIGHT COLUMN — Geometric decoration like reference */}
@@ -502,13 +509,13 @@ export default function App() {
                 </p>
               </div>
 
-              {/* [ EXPERIENCE ] */}
+              {/* [ Role Of Responsibility ] */}
               <div style={{ marginBottom: 48 }}>
                 <h3 style={{
                   fontFamily: "monospace", fontSize: 12,
                   color: "#666", letterSpacing: "0.2em",
                   textTransform: "uppercase", marginBottom: 20
-                }}>[ EXPERIENCE ]</h3>
+                }}>[ Role Of Responsibility ]</h3>
                 <div style={{
                   background: "#0d0d0d", border: "1px solid #1c1c1c",
                   borderLeft: "3px solid #ffffff",
@@ -638,6 +645,62 @@ export default function App() {
                   </div>
                 ))}
               </div>
+
+              {/* [ CODING PROFILES ] */}
+              <div style={{ marginTop: 48 }}>
+                <div style={{ fontSize: 10, textTransform: "uppercase", color: "#444", marginBottom: 12 }}>Coding Profiles</div>
+                <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+                  {[
+                    { name: "LeetCode", id: "Compiler07", link: "https://leetcode.com/u/Compiler07/" },
+                    { name: "Codeforces", id: "neelpatil092", link: "https://codeforces.com/profile/neelpatil092" },
+                    { name: "CodeChef", id: "compiler7", link: "https://www.codechef.com/users/compiler7" }
+                  ].map((profile, i) => (
+                    <motion.a
+                      key={profile.name}
+                      href={profile.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: i * 0.1, duration: 0.4 }}
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        padding: "16px 20px",
+                        background: "#0d0d0d",
+                        border: "1px solid #1c1c1c",
+                        borderRadius: 12,
+                        textDecoration: "none",
+                        transition: "all 0.2s"
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.borderColor = "#ffffff";
+                        e.currentTarget.style.transform = "translateY(-2px)";
+                        e.currentTarget.querySelector('.profile-icon').style.color = "#fff";
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.borderColor = "#1c1c1c";
+                        e.currentTarget.style.transform = "translateY(0)";
+                        e.currentTarget.querySelector('.profile-icon').style.color = "#555";
+                      }}
+                    >
+                      <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                        <div style={{ fontSize: 15, fontWeight: 600, color: "#fff", fontFamily: "'Inter', sans-serif" }}>{profile.name}</div>
+                      </div>
+                      <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                        <span style={{ fontFamily: "monospace", fontSize: 13, color: "#888" }}>@{profile.id}</span>
+                        <span className="profile-icon" style={{ fontSize: 16, color: "#555", transition: "color 0.2s" }}>↗</span>
+                      </div>
+                    </motion.a>
+                  ))}
+                </div>
+              </div>
+
+              {/* [ GITHUB STATS ] */}
+              <GitHubStats />
+
             </section>
           </div>
         </section>
@@ -646,6 +709,9 @@ export default function App() {
         <section id="projects">
           <ProjectsSection />
         </section>
+
+        {/* ── NOTES ── */}
+        <NotesSection />
 
         {/* ── CONTACT ── */}
         <section id="contact">

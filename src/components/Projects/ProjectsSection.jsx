@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { projects } from "../../constants/data";
 import { C } from "../../constants/designTokens";
@@ -11,15 +11,25 @@ export default function ProjectsSection() {
   const isMobile = useIsMobile();
   const [activeIdx, setActiveIdx] = useState(0);
   const [direction, setDirection] = useState(0);
+  const [filter, setFilter] = useState("All");
+
+  const filteredProjects = projects.filter(p => filter === "All" || p.category === filter);
+
+  useEffect(() => {
+    setActiveIdx(0);
+    setDirection(0);
+  }, [filter]);
 
   const handleNext = () => {
+    if (filteredProjects.length === 0) return;
     setDirection(1);
-    setActiveIdx((prev) => (prev + 1) % projects.length);
+    setActiveIdx((prev) => (prev + 1) % filteredProjects.length);
   };
 
   const handlePrev = () => {
+    if (filteredProjects.length === 0) return;
     setDirection(-1);
-    setActiveIdx((prev) => (prev - 1 + projects.length) % projects.length);
+    setActiveIdx((prev) => (prev - 1 + filteredProjects.length) % filteredProjects.length);
   };
 
   const variants = {
@@ -75,6 +85,30 @@ export default function ProjectsSection() {
         <p style={{ fontSize: 14, color: "#555", maxWidth: 500, margin: 0 }}>
           Robust architecture. Scalable deployments. High-performance systems. The proof is in our projects.
         </p>
+
+        {/* Filter Bar */}
+        <div style={{ display: "flex", gap: 12, marginTop: 32, flexWrap: "wrap" }}>
+          {["All", "Backend", "Frontend", "Fullstack", "Mobile"].map(cat => (
+            <button
+              key={cat}
+              onClick={() => setFilter(cat)}
+              style={{
+                background: filter === cat ? "#ffffff" : "transparent",
+                color: filter === cat ? "#000000" : "#aaaaaa",
+                border: `1px solid ${filter === cat ? "#ffffff" : "#333333"}`,
+                padding: "8px 20px",
+                borderRadius: 20,
+                fontSize: 12,
+                fontFamily: "monospace",
+                textTransform: "uppercase",
+                cursor: "pointer",
+                transition: "all 0.2s"
+              }}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
       </div>
 
       <div
@@ -177,7 +211,13 @@ export default function ProjectsSection() {
               whileTap={{ cursor: isMobile ? "default" : "grabbing" }}
             >
               <div style={{ position: "relative", padding: isMobile ? "0" : "10px" }}>
-                <ProjectCard project={projects[activeIdx]} active={true} />
+                {filteredProjects.length > 0 ? (
+                  <ProjectCard project={filteredProjects[activeIdx] || filteredProjects[0]} active={true} />
+                ) : (
+                  <div style={{ padding: 40, textAlign: "center", color: "#888", border: "1px dashed #333", borderRadius: 16 }}>
+                    No projects found for this category.
+                  </div>
+                )}
               </div>
             </motion.div>
           </AnimatePresence>
@@ -230,7 +270,7 @@ export default function ProjectsSection() {
         )}
 
         <div style={{ display: "flex", gap: 10, alignItems: "center", justifyContent: "center", height: 20 }}>
-          {projects.map((p, i) => (
+          {filteredProjects.map((p, i) => (
             <button
               key={p.id}
               onClick={() => {
